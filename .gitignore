@@ -1,0 +1,33 @@
+# Configuración de usuario (privada, no se publica)
+config.json
+
+# Registros locales de usuarios (privados)
+registros/
+**/registros/
+
+# Archivos de empaquetado
+*.skill
+build/
+dist/
+
+# Notas internas de construcción (no publicar)
+ESTADO.md
+PUBLICAR.md
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python (si más adelante hay scripts)
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
