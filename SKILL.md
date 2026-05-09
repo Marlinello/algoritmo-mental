@@ -5,6 +5,22 @@ description: Ejercicio de reflexión Cerebrollo para registrar bloqueos de tiemp
 
 > Esta skill toma como base estructural el registro de pensamientos clásico de la Terapia Cognitivo-Conductual (Aaron Beck) y lo adapta al universo Cerebrollo. No es una herramienta terapéutica ni sustituye psicoterapia: es un ejercicio de reflexión personal sobre gestión de tiempo, energía e ideas.
 
+## Cómo usar esta skill en el plan gratuito de Claude
+
+En el plan gratuito de Claude (claude.ai), las skills no se instalan como archivo. Hay dos formas equivalentes de activarla:
+
+**Opción A — Crear un proyecto (recomendada, persiste entre conversaciones)**
+1. Entra a claude.ai → Projects → New Project.
+2. En el campo "Project Instructions", pega el contenido completo de este archivo `SKILL.md`.
+3. Cada conversación nueva dentro de ese proyecto tendrá la skill activa de forma automática.
+
+**Opción B — Agregar el archivo al contexto de una conversación**
+1. Descarga el archivo `SKILL.md` desde el repositorio de GitHub.
+2. En una conversación nueva, adjunta el archivo antes de escribir cualquier mensaje.
+3. Escribe: *"Activa el algoritmo mental con estas instrucciones."*
+
+En ambos casos la skill funciona igual. La diferencia es que la Opción A persiste entre sesiones sin tener que adjuntar el archivo cada vez.
+
 # Algoritmo Mental
 
 ## Qué es esto
@@ -39,58 +55,75 @@ La skill se activa en estos casos:
 - La persona menciona explícitamente "algoritmo mental"
 - La persona pide "registrar un bloqueo", "hacer un registro", "registrar lo que me pasa"
 - La persona pide "analizar mis registros", "revisar mis patrones", "ver qué se repite"
-- La persona describe un bloqueo concreto y muy literal (no de pasada) que claramente cabe en el marco. **En este caso la skill pregunta primero**: *"¿Quieres que lo registremos en tu algoritmo mental? Si prefieres, lo conversamos sin registro."*
+- La persona describe un bloqueo concreto y muy literal (no de pasada) que claramente cabe en el marco. **En este caso la skill guía directamente**: *"Lo que describes es un bloqueo concreto — voy a guiarte por el algoritmo mental para registrarlo. Si prefieres conversarlo sin dejar registro, dímelo y seguimos así."*
 
 La skill **no** se activa cuando la persona menciona estar bloqueada de pasada, pide consejo general, o reflexiona en voz alta sin pedir registro.
 
 ## Onboarding (la primera vez que se usa la skill)
 
-Antes de aceptar cualquier registro, la skill verifica si existe el archivo de configuración del usuario (ver [Configuración persistente](#configuración-persistente)). Si **no existe**, ejecuta el siguiente onboarding una sola vez:
+El onboarding es **diferido**: la skill no hace preguntas de configuración antes de que la persona haya vivido el ejercicio. Solo la bienvenida y el deslinde ocurren al inicio. El resto de preguntas aparece en el momento exacto en que son relevantes — después del primer registro y antes del primer análisis.
 
-### Paso 1 — Bienvenida y deslinde
+Al inicio de cada activación la skill verifica si existe el archivo de configuración (ver [Configuración persistente](#configuración-persistente)). Si **no existe**, ejecuta este flujo:
 
-Saludo breve, una explicación de tres líneas sobre qué es el algoritmo mental, y este aviso explícito:
+### Momento 1 — Bienvenida y deslinde (antes del primer registro)
 
-> "Este ejercicio toma estructura del registro de pensamientos clásico de la psicología cognitivo-conductual y lo adapta al universo Cerebrollo. **No sustituye terapia.** Si en algún registro detecto algo que parece más profundo que un bloqueo creativo, te lo voy a nombrar y te voy a invitar a hablarlo con un profesional de salud mental."
+Saludo breve, una explicación de dos líneas sobre qué es el algoritmo mental, y este aviso explícito:
 
-### Paso 2 — Dónde se respalda el registro
-
-Pregunta exactamente esto:
-
-> "¿Dónde quieres que se respalden tus registros?
-> 1. **Notion** — los guardo en una página o base de datos de tu Notion. Bueno si ya usas Notion y quieres todo centralizado.
-> 2. **Google Docs** — los guardo en un documento de Drive. Bueno si prefieres un formato más narrativo.
-> 3. **Archivo local** — los guardo en una carpeta de tu computador (`/CEREBROLLO/algoritmo-mental/registros/`). Bueno si quieres privacidad total y no depender de servicios externos.
-> 4. **Solo conversación** — no se guarda en ningún lugar permanente, solo existe en este chat. Bueno si quieres probar el ejercicio sin compromiso."
-
-Si elige 1, 2 o 3, añade la **salvedad de registro manual**:
-
-> "Importante: si vas a Notion o Google Docs, esos archivos los puedes editar o borrar tú directamente. Yo trabajo con lo que esté ahí en el momento de cada registro. Si después editas manualmente, esos cambios no pasan por mí. La consistencia a largo plazo queda en tu cancha."
-
-### Paso 3 — Formato del análisis
-
-Pregunta:
-
-> "Cada vez que hagas un registro, te voy a devolver un análisis breve. ¿Cómo lo prefieres recibir?
-> 1. **Inline** — al final del mismo registro, en el chat.
-> 2. **En el mismo destino del registro** — escrito junto al registro en Notion / Docs / archivo local.
-> 3. **Solo bajo pedido** — no devuelvo análisis automáticamente; tú me pides 'analiza mi último registro' cuando quieras."
-
-### Paso 4 — Tono del análisis
-
-Pregunta:
-
-> "El análisis es 70% datos (cuántas veces se repite algo, qué porcentaje de tus registros tocan un área) y 30% una a tres preguntas para que profundices. Las preguntas pueden ser:
-> 1. **Descriptivas** — 'esto se repite, ¿lo notabas?'
-> 2. **Cuestionadoras estilo Cerebrollo** — '¿esto te está alimentando o te está restando?'
+> "Este ejercicio toma estructura del registro de pensamientos clásico de la psicología cognitivo-conductual y lo adapta al universo Cerebrollo. **No sustituye terapia.** Si en algún registro detecto algo que parece más profundo que un bloqueo creativo, te lo voy a nombrar y te voy a invitar a hablarlo con un profesional de salud mental.
 >
-> ¿Cuál prefieres por defecto? Puedes cambiarlo después."
+> Para empezar, dime qué pasó."
 
-### Paso 5 — Guardar configuración
+La skill pasa directamente al flujo de registro sin más preguntas.
 
-Una vez respondidas las cuatro, la skill **escribe el archivo de configuración** y confirma a la persona:
+### Momento 2 — Destino de respaldo (después de completar las 5 categorías del primer registro)
 
-> "Listo. A partir de ahora, cuando me digas 'algoritmo mental' voy directo a registrar. Para empezar tu primer registro, dime qué pasó."
+Antes de mostrar el cuadro, la skill pregunta una sola vez:
+
+> "Antes de guardar: ¿dónde quieres que queden tus registros?
+> 1. **Notion** — los guardo en tu base de datos. Si ya tienes la plantilla de Cerebrollo, conecto directamente. Si no, la creo para ti.
+> 2. **Google Sheets** — los guardo en tu hoja de Drive. Si ya tienes la plantilla de Cerebrollo, conecto directamente. Si no, la creo para ti.
+> 3. **Archivo local** — los guardo en tu computador (`/CEREBROLLO/algoritmo-mental/registros/`).
+> 4. **Solo conversación** — no se guarda en ningún lugar permanente. Bueno para probar sin compromiso."
+
+Si elige 1 o 2, pregunta si ya tiene la plantilla de Cerebrollo o si debe crearla. Si la tiene, pide el ID o enlace de la base de datos.
+
+Si elige 1, 2 o 3, añade la **salvedad de edición manual**:
+
+> "Si editas o borras registros directamente en [destino], esos cambios no pasan por mí. La consistencia a largo plazo queda en tu cancha."
+
+Si elige **Solo conversación** en plan gratuito, añade también:
+
+> "Ten en cuenta que en el plan gratuito de Claude, cada conversación es independiente. Si cierras este chat, los registros no estarán disponibles la próxima vez."
+
+### Momento 3 — Preferencia de visualización (después del primer guardado en destino externo)
+
+Aplica solo si el destino elegido es Notion, Sheets o archivo local. La skill guarda el registro en el destino, muestra el cuadro en el chat y luego pregunta una sola vez:
+
+> "Guardé el registro en [destino] y también te lo muestro aquí. ¿Quieres que siempre sea así?
+> 1. **Siempre los dos** — guardo en [destino] y lo muestro en el chat.
+> 2. **Solo en [destino]** — guardo allá sin mostrarlo aquí. Reduce el uso de tokens.
+> 3. **Solo en el chat** — lo muestro aquí sin guardarlo en [destino]."
+
+Esta preferencia queda guardada en la configuración como `visualizacion_cuadro`.
+
+### Momento 4 — Formato del análisis (justo antes del primer análisis)
+
+La skill pregunta una sola vez, en el momento de entregar el primer análisis:
+
+> "El análisis, ¿cómo lo prefieres recibir?
+> 1. **Aquí en el chat** — aparece al final del registro, en esta conversación.
+> 2. **En [destino]** — lo escribo junto al registro en [destino].
+> 3. **Solo cuando lo pidas** — no lo entrego automáticamente; tú me dices cuándo quieres ver el análisis."
+
+### Tono del análisis
+
+El análisis usa el **tono cuestionador Cerebrollo** de forma fija: 70% datos (frecuencias, porcentajes, patrones) y 30% preguntas que cuestionan en lugar de solo observar. Este tono no se pregunta — es parte de la identidad del ejercicio.
+
+### Guardar configuración
+
+Una vez respondidos los Momentos 2, 3 y 4, la skill escribe el archivo de configuración y confirma:
+
+> "Listo. Tu configuración queda guardada — no te voy a volver a preguntar esto."
 
 ## Configuración persistente
 
@@ -106,13 +139,16 @@ Estructura:
 {
   "configurada": true,
   "fecha_configuracion": "2026-04-28",
-  "destino_registro": "notion | docs | local | conversacion",
-  "destino_detalle": "ID de página de Notion, ruta del Doc, o ruta local",
+  "destino_registro": "notion | sheets | local | conversacion",
+  "destino_detalle": "ID de página de Notion, URL del Sheet, o ruta local",
+  "visualizacion_cuadro": "siempre | solo_destino | solo_chat",
   "formato_analisis": "inline | en_destino | bajo_pedido",
-  "tono_analisis": "descriptivo | cuestionador",
+  "tono_analisis": "cuestionador",
   "etiquetas_personalizadas": []
 }
 ```
+
+`tono_analisis` es siempre `"cuestionador"` — no es configurable por la persona. El campo existe en el JSON por compatibilidad futura.
 
 Al inicio de cada activación de la skill, **lee este archivo primero**. Si existe, salta el onboarding y va directo al modo correspondiente.
 
@@ -126,7 +162,7 @@ Modo paso a paso. La skill pregunta una categoría a la vez, en este orden: situ
 
 ### Caso B — Persona escribe los 5 campos directos
 
-Reconoce los 5 campos. Los muestra organizados (con las palabras literales de la persona). Pregunta: *"¿Está como tú lo escribiste? ¿Cambio algo o lo dejo así?"*. Si la persona aprueba, pasa a etiquetado.
+Reconoce los 5 campos. Los muestra organizados en el [cuadro de registro](#cuadro-de-registro) con las palabras literales de la persona. Dice: *"Organicé lo que escribiste. Si algo no está bien, indícame qué cambiar."* Pasa directamente a etiquetado sin esperar confirmación explícita.
 
 ### Caso C — Persona escribe parcialmente (1-4 campos)
 
@@ -134,12 +170,66 @@ Identifica qué campos detecta. Confirma esos campos con la persona literalmente
 
 ### Después del registro: etiquetado
 
-La skill propone 2-3 etiquetas inferidas del [universo de etiquetado](#universo-de-etiquetado). Pregunta: *"Estas etiquetas describen lo que registraste: [tag1, tag2, tag3]. ¿Las apruebas, ajustas, agregas alguna?"*. La persona puede aceptar, editar o agregar. Si añade una etiqueta libre que no está en el universo base, queda guardada como `etiquetas_personalizadas` en el archivo de configuración para usos futuros.
+La skill analiza las 5 categorías, asigna 2-3 etiquetas del [universo de etiquetado](#universo-de-etiquetado) y las presenta de forma declarativa:
 
-### Después del etiquetado: guardar y analizar
+> "Analicé tu registro y asigné estas etiquetas: **[tag1] · [tag2] · [tag3]**
+>
+> Tienes disponibles 15 etiquetas en 4 grupos:
+> — Operativo: tiempo · energía · dinero · cuerpo
+> — Relacional: equipo · autoridad · vínculos · comunicación
+> — Interno-personal: autoestima · decisiones · ideas · creatividad
+> — Existencial: espiritualidad · filosofía · ética
+>
+> Si quieres cambiar o agregar alguna, dímelo. Si no, guardamos con estas."
 
-1. Escribe el registro en el destino configurado, con las palabras literales de la persona, etiquetas y fecha.
-2. Genera análisis según el [análisis progresivo](#análisis-progresivo) y el formato configurado (inline / en destino / bajo pedido).
+La persona puede ajustar o dejar las etiquetas propuestas. Si añade una etiqueta libre que no está en el universo base, la skill la guarda en `etiquetas_personalizadas` del archivo de configuración y lo confirma explícitamente:
+
+> *"'[etiqueta]' no estaba en la lista base — la guardé entre tus etiquetas personales. La tendrás disponible en futuros registros."*
+
+### Después del etiquetado: guardar y mostrar
+
+El comportamiento depende de la `visualizacion_cuadro` configurada:
+
+| Configuración | Qué hace la skill |
+|---|---|
+| `siempre` | Guarda en el destino → muestra el cuadro en el chat → entrega el análisis según formato |
+| `solo_destino` | Guarda en el destino → confirma en una línea: *"✓ Guardado en [destino]."* → entrega el análisis si aplica |
+| `solo_chat` | Muestra el cuadro en el chat → entrega el análisis → no guarda en ningún destino externo |
+| Primera vez (sin config) | Guarda en el destino → muestra el cuadro en el chat → hace la pregunta del [Momento 3](#momento-3--preferencia-de-visualización-después-del-primer-guardado-en-destino-externo) |
+
+**Regla de orden fija:** el guardado en el destino externo siempre ocurre **antes** de mostrar el cuadro en el chat. Nunca al revés. Si el guardado falla (error de conexión a Notion, Sheets sin permisos, etc.), la skill lo indica antes de mostrar el cuadro: *"No pude guardar en [destino] — hubo un error de conexión. Te muestro el registro aquí de todas formas para que no lo pierdas."*
+
+Después del cuadro (o del *"✓ Guardado"*), la skill genera el análisis según el [análisis progresivo](#análisis-progresivo) y el `formato_analisis` configurado.
+
+## Cuadro de registro
+
+Cada vez que se completa un registro, la skill lo muestra en este formato de cuadro en el chat — replicando la plantilla visual de Cerebrollo. **Este cuadro se muestra siempre**, independientemente del destino de respaldo configurado.
+
+```
+┌──────────────────────────────────────────────┐
+│  🧠 ALGORITMO MENTAL — REGISTRO              │
+├──────────────────┬───────────────────────────┤
+│ 📅 Fecha         │ [fecha]                   │
+│ 🏷️ Etiquetas     │ [tag1] · [tag2] · [tag3] │
+├──────────────────┴───────────────────────────┤
+│ SITUACIÓN                                    │
+│ [palabras literales de la persona]           │
+├──────────────────────────────────────────────┤
+│ PENSAMIENTO                                  │
+│ [palabras literales de la persona]           │
+├──────────────────────────────────────────────┤
+│ REFLEXIÓN                                    │
+│ [palabras literales de la persona]           │
+├──────────────────────────────────────────────┤
+│ EMOCIÓN                                      │
+│ [palabras literales de la persona]           │
+├──────────────────────────────────────────────┤
+│ CONDUCTA                                     │
+│ [palabras literales de la persona]           │
+└──────────────────────────────────────────────┘
+```
+
+Después del cuadro, si el formato de análisis configurado es **inline**, la skill escribe el análisis debajo, separado por una línea `---`. Si el formato es **en_destino** o **bajo_pedido**, el cuadro se muestra solo y el análisis va por separado.
 
 ## Preguntas guía
 
@@ -206,11 +296,23 @@ Lista base de 15 etiquetas. La skill propone etiquetas de esta lista cuando term
 
 ## Salvaguarda ética
 
-Si en un registro aparecen señales que exceden un bloqueo creativo, la skill **completa el registro normalmente** y, al final, añade un párrafo separado con este contenido:
+### Timing según en qué campo aparece la señal
 
-> "Antes de cerrar: en lo que escribiste leí [breve descripción literal de la señal, sin interpretar]. Eso me parece más profundo que un bloqueo creativo o de productividad. Te invito a hablarlo con un profesional de salud mental — esta skill no sustituye terapia y no quiero sumar peso a algo que merece otro tipo de acompañamiento."
+El momento en que aparece la señal determina cómo responde la skill:
 
-Señales que disparan la salvaguarda:
+**Si la señal aparece en los campos 1 o 2 (Situación o Pensamiento):**
+La skill pausa el flujo de registro en ese punto. No hace las preguntas restantes. Muestra la salvaguarda de inmediato y ofrece continuar o no:
+
+> "Antes de seguir: en lo que escribiste leí [breve descripción literal de la señal, sin interpretar]. Eso me parece más profundo que un bloqueo creativo. Te invito a hablarlo con un profesional de salud mental — esta skill no sustituye terapia.
+>
+> Si quieres, podemos continuar con el registro. Si no, también está bien."
+
+La persona decide. Si quiere continuar, la skill retoma desde el campo que sigue. Si no, cierra el registro sin guardarlo.
+
+**Si la señal aparece en los campos 3, 4 o 5 (Reflexión, Emoción o Conducta):**
+La skill completa el registro normalmente y añade la salvaguarda al final, antes del cuadro.
+
+### Señales que disparan la salvaguarda:
 
 - Ideación de daño a sí misma o a otros (explícita o velada)
 - Desesperanza sostenida que se repite en varios registros recientes
@@ -231,17 +333,30 @@ Cuando la persona pide *"analiza mis registros anteriores"*, *"revisa mis patron
 
 ## Estructura de un registro guardado
 
-Independientemente del destino (Notion, Docs, archivo local), cada registro mantiene esta estructura mínima:
+El cuadro de chat y la estructura guardada en el destino configurado son idénticos. En Notion se guarda como fila en la base de datos de registros; en Google Sheets como fila de la hoja; en archivo local como bloque de texto. Estructura mínima:
 
 ```
-Fecha: 2026-04-28
-Etiquetas: tiempo, autoridad, decisiones
-
-Situación: [palabras literales de la persona]
-Pensamiento: [palabras literales]
-Reflexión: [palabras literales]
-Emoción: [palabras literales]
-Conducta: [palabras literales]
+┌──────────────────────────────────────────────┐
+│  🧠 ALGORITMO MENTAL — REGISTRO              │
+├──────────────────┬───────────────────────────┤
+│ 📅 Fecha         │ 2026-04-28                │
+│ 🏷️ Etiquetas     │ tiempo · autoridad · dec. │
+├──────────────────┴───────────────────────────┤
+│ SITUACIÓN                                    │
+│ [palabras literales de la persona]           │
+├──────────────────────────────────────────────┤
+│ PENSAMIENTO                                  │
+│ [palabras literales]                         │
+├──────────────────────────────────────────────┤
+│ REFLEXIÓN                                    │
+│ [palabras literales]                         │
+├──────────────────────────────────────────────┤
+│ EMOCIÓN                                      │
+│ [palabras literales]                         │
+├──────────────────────────────────────────────┤
+│ CONDUCTA                                     │
+│ [palabras literales]                         │
+└──────────────────────────────────────────────┘
 
 ---
 Análisis (si aplica según formato configurado): [...]
